@@ -40,6 +40,7 @@ def manager_init():
     ("VisionRadarToggle", "0"),
     ("IsDriverViewEnabled", "0"),
     ("ManualParkingBrakeSNGToggle", "0"),
+    ("DriverMonitoringToggle","1"),
   ]
 
   if params.get("RecordFrontLock", encoding='utf-8') == "1":

@@ -69,6 +69,12 @@ QWidget * toggles_panel() {
                                            "Experimental feature which enables stop and go for Subaru Global models with manual handbrake. Models with electric parking brake should keep this disabled.",
                                            "../assets/offroad/icon_speed_limit.png"));
 
+  toggles_list->addWidget(horizontal_line());
+  toggles_list->addWidget(new ParamControl("DriverMonitoringToggle",
+                                           "Driver Monitoring Toggle",
+                                           "Driver Monitoring Toggle",
+                                           "../assets/offroad/icon_shell.png"));
+
 
   bool record_lock = Params().getBool("RecordFrontLock");
   record_toggle->setEnabled(!record_lock);

@@ -5,6 +5,7 @@ from common.numpy_fast import interp
 from common.realtime import DT_DMON
 from common.filter_simple import FirstOrderFilter
 from common.stat_live import RunningStatFilter
+from common.params import Params
 
 EventName = car.CarEvent.EventName
 
@@ -14,12 +15,13 @@ EventName = car.CarEvent.EventName
 #  We recommend that you do not change these numbers from the defaults.
 # ******************************************************************************************
 
-_AWARENESS_TIME = 120.  # passive wheel touch total timeout
-_AWARENESS_PRE_TIME_TILL_TERMINAL = 20.
-_AWARENESS_PROMPT_TIME_TILL_TERMINAL = 20.
-_DISTRACTED_TIME = 30.
-_DISTRACTED_PRE_TIME_TILL_TERMINAL = 20.
-_DISTRACTED_PROMPT_TIME_TILL_TERMINAL = 20.
+
+_AWARENESS_TIME = 35.  # passive wheel touch total timeout
+_AWARENESS_PRE_TIME_TILL_TERMINAL = 12.
+_AWARENESS_PROMPT_TIME_TILL_TERMINAL = 6.
+_DISTRACTED_TIME = 11.
+_DISTRACTED_PRE_TIME_TILL_TERMINAL = 8.
+_DISTRACTED_PROMPT_TIME_TILL_TERMINAL = 6.
 
 _FACE_THRESHOLD = 0.5
 _PARTIAL_FACE_THRESHOLD = 0.5
@@ -106,6 +108,12 @@ class DriverStatus():
     self.pose_calibrated = self.pose.pitch_offseter.filtered_stat.n > _POSE_OFFSET_MIN_COUNT and \
                             self.pose.yaw_offseter.filtered_stat.n > _POSE_OFFSET_MIN_COUNT
     self.blink = DriverBlink()
+    self.drmon = Params().get('DriverMonitoringToggle', encoding='utf8') == "1"
+    global _AWARENESS_TIME
+    global _DISTRACTED_TIME
+    if not self.drmon:
+      _AWARENESS_TIME = 999999.
+      _DISTRACTED_TIME = 999999.
     self.awareness = 1.
     self.awareness_active = 1.
     self.awareness_passive = 1.
